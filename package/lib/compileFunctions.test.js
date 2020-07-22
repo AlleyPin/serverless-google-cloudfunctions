@@ -568,6 +568,20 @@ describe('CompileFunctions', () => {
             },
           ],
         },
+        func3: {
+          handler: 'func3',
+          events: [
+            {
+              event: {
+                eventType: 'foo',
+                resource: 'some-resource',
+                failurePolicy: {
+                  retry: {},
+                },
+              },
+            },
+          ],
+        },
       };
 
       const compiledResources = [
@@ -604,6 +618,27 @@ describe('CompileFunctions', () => {
             eventTrigger: {
               eventType: 'foo',
               resource: 'some-resource',
+            },
+            labels: {},
+          },
+        },
+        {
+          type: 'gcp-types/cloudfunctions-v1:projects.locations.functions',
+          name: 'my-service-dev-func3',
+          properties: {
+            entryPoint: 'func3',
+            parent: 'projects/myProject/locations/us-central1',
+            runtime: 'nodejs8',
+            function: 'my-service-dev-func3',
+            availableMemoryMb: 256,
+            timeout: '60s',
+            sourceArchiveUrl: 'gs://sls-my-service-dev-12345678/some-path/artifact.zip',
+            eventTrigger: {
+              eventType: 'foo',
+              resource: 'some-resource',
+              failurePolicy: {
+                retry: {},
+              },
             },
             labels: {},
           },
